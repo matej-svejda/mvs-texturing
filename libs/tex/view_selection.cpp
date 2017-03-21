@@ -63,7 +63,7 @@ set_data_costs(std::vector<FaceInfo> const & face_infos, DataCosts const & data_
             const std::size_t component = face_infos[id].component;
             const std::size_t cid = face_infos[id].id;
             //TODO change index type of mrf::Graph
-            costs[component].push_back({static_cast<int>(cid), 0.001 * data_cost});
+            costs[component].push_back({static_cast<int>(cid), 0.01 * data_cost});
         }
 
         int label = i + 1;

@@ -97,9 +97,9 @@ generate_debug_embeddings(std::vector<TextureView> * texture_views) {
                 int d1 = (id % 100) / 10;
                 int d2 = id % 10;
 
-                print_number(image, ox, oy, d0, font_color);
-                print_number(image, ox + 4, oy, d1, font_color);
-                print_number(image, ox + 8, oy, d2, font_color);
+//                print_number(image, ox, oy, d0, font_color);
+//                print_number(image, ox + 4, oy, d1, font_color);
+//                print_number(image, ox + 8, oy, d2, font_color);
             }
         }
 

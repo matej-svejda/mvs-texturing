@@ -28,13 +28,13 @@
 
 #include <fstream>
 
+
 void
-save_labels(const mve::TriangleMesh & mesh, const std::vector<std::size_t> & labels, const std::string & filename)
+save_labels(const std::vector<std::size_t> & labels, const std::string & filename)
 {
-     mve::TriangleMesh::FaceList const & mesh_faces = mesh.get_faces();
 	std::ofstream out(filename);
 	for (size_t i = 0; i < labels.size(); ++i) {
-		out << labels[i] << " " << mesh_faces[i] << " " << mesh_faces[i + 1] << " "<< mesh_faces[i + 2] << std::endl;
+		out << labels[i]/* << " " << mesh_faces[3 * i] << " " << mesh_faces[3 * i + 1] << " "<< mesh_faces[3 * i + 2]*/ << std::endl;
 	}
 	out.close();
 }
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
             for (std::size_t i = 0; i < graph.num_nodes(); ++i) {
                 labeling[i] = graph.get_label(i);
             }
-		  save_labels(*mesh, labeling, "face_labeling.txt");
+		  save_labels(labeling, conf.out_prefix + "_labels.txt");
         }
     } else {
         std::cout << "Loading labeling from file... " << std::flush;
