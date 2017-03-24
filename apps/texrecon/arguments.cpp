@@ -10,6 +10,7 @@
 #include "arguments.h"
 #include "util/file_system.h"
 
+#define DATA_TERM_WEIGHT "data_term_weight"
 #define SKIP_GLOBAL_SEAM_LEVELING "skip_global_seam_leveling"
 #define SKIP_GEOMETRIC_VISIBILITY_TEST "skip_geometric_visibility_test"
 #define SKIP_LOCAL_SEAM_LEVELING "skip_local_seam_leveling"
@@ -58,6 +59,7 @@ Arguments parse_args(int argc, char **argv) {
         "Data term: {" +
         choices<tex::DataTerm>() + "} [" +
         choice_string<tex::DataTerm>(tex::DATA_TERM_GMI) + "]");
+    args.add_option('\0', DATA_TERM_WEIGHT, true);
     args.add_option('s',"smoothness_term", true,
         "Smoothness term: {" +
         choices<tex::SmoothnessTerm>() + "} [" +
@@ -127,7 +129,9 @@ Arguments parse_args(int argc, char **argv) {
             conf.settings.tone_mapping = parse_choice<tex::ToneMapping>(i->arg);
         break;
         case '\0':
-            if (i->opt->lopt == SKIP_GEOMETRIC_VISIBILITY_TEST) {
+            if (i->opt->lopt == DATA_TERM_WEIGHT) {
+                conf.settings.data_term_weight = std::stof(i->arg);
+            } else if (i->opt->lopt == SKIP_GEOMETRIC_VISIBILITY_TEST) {
                 conf.settings.geometric_visibility_test = false;
             } else if (i->opt->lopt == SKIP_GLOBAL_SEAM_LEVELING) {
                 conf.settings.global_seam_leveling = false;
