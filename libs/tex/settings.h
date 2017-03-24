@@ -93,6 +93,7 @@ struct Settings {
     bool hole_filling = true;
     bool keep_unseen_faces = false;
     bool save_untextured_faces_mesh = false;
+    float data_term_weight = 1.0;
 };
 
 TEX_NAMESPACE_END

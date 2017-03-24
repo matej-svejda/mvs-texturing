@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
         std::exit(EXIT_FAILURE);
     }
 
+
     std::cout << "Load and prepare mesh: " << std::endl;
     mve::TriangleMesh::Ptr mesh;
     try {
@@ -95,6 +96,7 @@ int main(int argc, char **argv) {
         util::WallTimer rwtimer;
 
         tex::DataCosts data_costs(num_faces, texture_views.size());
+				std::cout << "\tData term weight is " << conf.settings.data_term_weight << std::endl;
         if (conf.data_cost_file.empty()) {
             tex::calculate_data_costs(mesh, &texture_views, conf.settings, &data_costs);
 

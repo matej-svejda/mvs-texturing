@@ -47,10 +47,12 @@ set_neighbors(UniGraph const & graph, std::vector<FaceInfo> const & face_infos,
     }
 }
 
+#include <iostream>
+
 /** Set the data costs of the MRF. */
 void
 set_data_costs(std::vector<FaceInfo> const & face_infos, DataCosts const & data_costs,
-    std::vector<mrf::Graph::Ptr> const & mrfs) {
+    Settings const & settings, std::vector<mrf::Graph::Ptr> const & mrfs) {
 
     /* Set data costs for all labels except label 0 (undefined) */
     for (std::size_t i = 0; i < data_costs.rows(); i++) {
@@ -63,7 +65,7 @@ set_data_costs(std::vector<FaceInfo> const & face_infos, DataCosts const & data_
             const std::size_t component = face_infos[id].component;
             const std::size_t cid = face_infos[id].id;
             //TODO change index type of mrf::Graph
-            costs[component].push_back({static_cast<int>(cid), 0.01 * data_cost});
+            costs[component].push_back({static_cast<int>(cid), settings.data_term_weight * data_cost});
         }
 
         int label = i + 1;
@@ -137,7 +139,7 @@ view_selection(DataCosts const & data_costs, UniGraph * graph, Settings const & 
     /* Set neighbors must be called prior to set_data_costs (LBP). */
     set_neighbors(mgraph, face_infos, mrfs);
 
-    set_data_costs(face_infos, data_costs, mrfs);
+    set_data_costs(face_infos, data_costs, settings, mrfs);
 
     bool multiple_components_simultaneously = false;
     #ifdef RESEARCH
